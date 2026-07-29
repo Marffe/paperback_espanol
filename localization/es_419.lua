@@ -2512,6 +2512,27 @@ return { -- Español
           "este Comodín al anotarse"
         }
       },
+      j_paperback_thornring = {
+        name = "ThornRing",
+        text = {
+          { "Cuando se juega un {C:attention}#1#{}, destruye",
+            "la mano jugada y crea una carta",
+            "{C:spectral}Espectral{} al azar",
+          },
+          { "{C:red}* Quedan #2#{}{C:red}.{}" }
+        },
+        unlock = {
+          "Ten una baraja",
+          "que solo tenga {C:hearts}Corazones{}"
+        }
+      },
+      j_paperback_thornring_weird = {
+        name = "ThornRing",
+        text = {
+          { "Las {V:1}#1#{} jugadas son {C:attention}destruidas{}" },
+          { "{E:1}G R A C I A S{}" }
+        }
+      },
       j_paperback_bamboo_stick = {
         name = "Palito de Bambú",
         text = {
@@ -3676,6 +3697,66 @@ return { -- Español
         text = {
           "El primer consumible usado en la",
           "{C:attention}apuesta{} crea una {C:attention}copia energizada{}"
+        }
+      },
+      c_paperback_red_tassel = {
+        name = "Borla Roja",
+        text = {
+          "La carta con la categoría más",
+          "baja en la {C:attention}mano anotada{} gana",
+          "permanentemente {C:mult}+#1#{} Multi"
+        }
+      },
+      c_paperback_tango_marinade = {
+        name = "Marinada Tango",
+        text = {
+          "Si la mano jugada contiene una",
+          "{C:attention}#1#{}, reactiva las primeras",
+          "{C:attention}#2#{} cartas usadas al anotar"
+        }
+      },
+      c_paperback_canned_ice_cream = {
+        name = "Helado en Lata",
+        text = {
+          "Cuando una carta es {C:red}destruida{},",
+          "este {C:paperback_ego_gift}Regalo E.G.O.{} gana la",
+          "mitad de sus {C:chips}Fichas{}",
+          "{C:inactive}(Actualmente {C:chips}+#1#{C:inactive} Fichas)"
+        }
+      },
+      c_paperback_hardwood_liquor_cup = {
+        name = "Vaso de Licor de Madera",
+        text = {
+          "La primera carta anotada en la",
+          "{C:attention}última{} mano de la ronda gana",
+          "permanentemente {C:chips}+#1#{} Fichas,",
+          "{C:mult}+#2#{} Multi, {C:money}+$#3#{} o {X:mult,C:white}X#4#{} Multi"
+        }
+      },
+      c_paperback_snuffed_candlestick = {
+        name = "Candelero Apagado",
+        text = {
+          "Gana {C:money}$#1#{} por cada mano",
+          "jugada después de la",
+          "primera cada ronda"
+        }
+      },
+      c_paperback_vestiges_of_the_king = {
+        name = "Vestigios del Rey",
+        text = {
+          "Si el descarte contiene",
+          "exactamente {C:attention}una{} carta,",
+          "mejórala con una mejora de",
+          "{C:paperback_minor_arcana}Arcana menor{} al azar"
+        }
+      },
+      c_paperback_prestige_card = {
+        name = "Tarjeta de Prestigio",
+        text = {
+          "Las compras en la tienda tienen",
+          "una prob. de {C:green}#1# en #2#{} de",
+          "crear una etiqueta al azar",
+          "{C:inactive}(Una vez por tienda)"
         }
       },
     },

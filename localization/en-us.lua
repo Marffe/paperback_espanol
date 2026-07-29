@@ -896,6 +896,10 @@ return {
           "{C:attention}all{} cards {C:attention}held in hand{} to",
           "the {C:attention}leftmost{} scored card",
           "{S:1.1,C:red,E:2}self-destructs",
+        },
+        unlock = {
+          "Have a deck containing {C:attention}only{}",
+          "{C:attention}face cards{}"
         }
       },
       j_paperback_kintsugi_joker = {
@@ -1509,6 +1513,27 @@ return {
           "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
         },
       },
+      j_paperback_thornring = {
+        name = "ThornRing",
+        text = {
+          { "When a {C:attention}#1#{} is played,",
+            "destroy the played hand and",
+            "create a random {C:spectral}Spectral{} card",
+          },
+          { "{C:red}* #2# left.{}" }
+        },
+        unlock = {
+          "Have a deck",
+          "of only {C:hearts}Hearts{}"
+        }
+      },
+      j_paperback_thornring_weird = {
+        name = "ThornRing",
+        text = {
+          { "Played {V:1}#1#{} are {C:attention}destroyed{}" },
+          { "{E:1}T H A N K  Y O U{}" }
+        }
+      },
       j_paperback_crispy_taco = {
         name = "Crispy Taco",
         text = {
@@ -2030,6 +2055,10 @@ return {
           "card {C:attention}destroyed{} this run",
           "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
         },
+        unlock = {
+          "Have a deck containing {C:attention}only{}",
+          "{C:paperback_light_suit}light suits{}"
+        }
       },
       j_paperback_hatred = {
         name = "HATRED",
@@ -2766,6 +2795,10 @@ return {
           "give {C:mult}+#1#{} Mult for each",
           "scored {C:paperback_light_suit}light suit{} this round",
           "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
+        },
+        unlock = {
+          "Have a deck containing {C:attention}only{}",
+          "{C:paperback_light_suit}light suits{}"
         }
       },
       j_paperback_shabu_shabu = {
@@ -4544,6 +4577,7 @@ return {
       paperback_goner_ex = "Goner!",
       paperback_hatred_death_ex = "DREAD",
       paperback_whitebeard_death_ex = "Quake!",
+      paperback_proceed_ex = "Proceed",
 
       paperback_ui_requires_restart = "Requires Restart",
       paperback_ui_no_requires_restart = "Doesn't Require Restart",
