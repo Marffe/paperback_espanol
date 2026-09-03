@@ -11,23 +11,59 @@ function Game.init_game_object(self)
     if (type(v.visible) == 'function' and not v:visible()) or v.visible == false then table.insert(secrets, k) end
   end
 
+  -- Temporary solution to track paperclip discovery for Clippy
+  -- until paperclips are converted to smods generic card modifier
+  G.PROFILES[G.SETTINGS.profile].career_stats.paperback_temp_paperclip_discovery = 
+  G.PROFILES[G.SETTINGS.profile].career_stats.paperback_temp_paperclip_discovery or {}
+
   ret.paperback = {
     solar_system_ct = 1,
     reference_card_ct = 0,
 
     round = {
-      scored_clips = 0
+      ranks_scored = {},
+      suits_scored = {},
+      scored_clips = 0,
+      scored_face_cards = 0,
+      destroyed_cards_this_round = 0,
+      played_only_ace_or_king = true,
+      played_only_straights = true,
     },
     ceramic_inc = 0,
     bandaged_inc = 0,
     stained_inc = 0,
-    destroyed_dark_suits = 0,
-    destroyed_cards = 0,
-    destroyed_cards_this_round = 0,
+    destroyed_cards = {
+      ["cards"] = 0,
+      suits = {
+        -- stores ['dark'], ['light'], ['suitless'], and suit keys (ex: ['Hearts'], ['Spades'], ['paperback_Crowns'])
+      },
+      ranks = {
+        -- stores ['face'], ['rankless'], and rank keys (ex: ['King'], ['10'], ['paperback_Apostle'])
+      },
+      enhancements = {
+        -- stores enhancements (ex: ['m_glass'], ['m_paperback_ceramic'])
+      }
+    },
+    tags_redeemed_this_run = 0,
     last_tarot_energized = false,
     ranks_scored_this_ante = {},
+    ranks_scored_this_run = {},
+    suits_scored_this_ante = {},
+    suits_scored_this_run = {},
+    heart_jacks_scored = 0,
+    heart_kings_scored = 0,
+    bloodstone_triggers = 0,
+    booster_packs_bought = 0,
+    buffoon_packs_bought = 0,
+    num_blinds_disabled = 0,
     last_scored_suit = 'Spades',
     hand_contained_crown = false,
+    hand_contained_star = false,
+    hand_only_scored_aces = true,
+    hand_only_scored_jacks = true,
+    hand_only_scored_8s = true,
+    hand_only_scored_light = true,
+    hand_only_scored_dark = true,
     domino_ranks = {},
     jjjj_count = 0,
     first_contact_count = 0,
@@ -35,11 +71,26 @@ function Game.init_game_object(self)
     secret_hands = secrets,
     arcana_used = {},
     sold_ego_gifts = {},
+    sold_jokers = {},
     finished_antes = {},
-    find_jimbo_unlock = false,
     max_consumeables = 0,
     jester_destroying_cards = false,
     coin_collection_adding_money = false,
+    jokers_owned_this_run = {},
+    played_pair_this_run = false,
+    only_pairs_this_run = true,
+    num_discards_this_ante = 0,
+    consecutive_rounds_played_without_discards = 0,
+    played_5_card_hand = false,
+    played_flushes = {},
+    played_straight_flushes = {},
+    played_dark_suit_hands = 0,
+    played_light_suit_hands = 0,
+    cards_added_to_deck = 0,
+    highest_amount_of_money_had = 0,
+    money_gained_this_ante = 0,
+    unique_clips_this_run = {},
+    num_bandages_broken_last_hand = 0,
 
     permabonus_odds = 0,
 
@@ -471,4 +522,70 @@ function SMODS.calculate_context(context, return_table, no_resolve)
   end
 
   return calculate_context_ref(context, return_table, no_resolve)
+end
+
+-- Keeps track of Jokers obtained this run
+local add_to_deck_ref = Card.add_to_deck
+function Card:add_to_deck(from_debuff)
+  add_to_deck_ref(self, from_debuff)
+  if self.ability.set == 'Joker' then
+    if not G.GAME.paperback.jokers_owned_this_run[self.config.center.key] then
+      G.GAME.paperback.jokers_owned_this_run[self.config.center.key] = 1
+    else
+      G.GAME.paperback.jokers_owned_this_run[self.config.center.key] = 1 + G.GAME.paperback.jokers_owned_this_run[self.config.center.key]
+    end
+  end
+end
+-- When setting sprites, add undersoul if
+-- Field is present
+local set_sprites_ref = Card.set_sprites
+function Card.set_sprites(self, center, front)
+  if self.config.center.paperback and self.config.center.paperback.undersoul_pos and G.P_CENTERS[self.config.center.key].discovered then
+    self.children.under_sprite = SMODS.create_sprite(self.T.x, self.T.y, self.T.w, self.T.h,
+      G.ASSET_ATLAS["paperback_jokers_atlas"], self.config.center.paperback.undersoul_pos)
+    self.children.under_sprite.states.hover = self.states.hover
+    self.children.under_sprite.states.click = self.states.click
+    self.children.under_sprite.states.drag = self.states.drag
+    self.children.under_sprite.states.collide.can = false
+    self.children.under_sprite:set_role({ major = self, role_type = 'Glued', draw_major = self })
+  end
+  set_sprites_ref(self, center, front)
+end
+
+SMODS.DrawStep {
+  key = 'undersoul',
+  order = -11,
+  func = function(self)
+    if self.children.under_sprite then
+      local scale_mod = 0.07 + 0.02 * math.sin(1.8 * G.TIMERS.REAL) +
+          0.00 * math.sin((G.TIMERS.REAL - math.floor(G.TIMERS.REAL)) * math.pi * 14) *
+          (1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL))) ^ 3
+      local rotate_mod = 0.05 * math.sin(1.219 * G.TIMERS.REAL) +
+          0.00 * math.sin((G.TIMERS.REAL) * math.pi * 5) * (1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL))) ^ 2
+
+      self.children.under_sprite:draw_shader('dissolve', 0, nil, nil, self.children.center, scale_mod, rotate_mod, nil,
+        0.1 + 0.03 * math.sin(1.8 * G.TIMERS.REAL), nil, 0.6)
+      self.children.under_sprite:draw_shader('dissolve', nil, nil, nil, self.children.center, scale_mod, rotate_mod)
+      if self.edition then
+        local edition = G.P_CENTERS[self.edition.key]
+        if edition.apply_to_float and self.children.under_sprite then
+          self.children.under_sprite:draw_shader(edition.shader, nil, nil, nil, self.children.center, scale_mod,
+            rotate_mod)
+        end
+      end
+    end
+  end,
+  conditions = { vortex = false, facing = 'front' },
+}
+SMODS.draw_ignore_keys.under_sprite = true -- needed so smods doesn't auto-draw it
+
+-- Meow
+local click_ref = Card.click
+function Card:click()
+  if self.config.center_key == 'j_paperback_pink_joker' then
+    play_sound("paperback_mario-paint-meow", (80 + math.random(40)) / 100)
+  end
+  if click_ref then
+    click_ref(self)
+  end
 end

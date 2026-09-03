@@ -20,7 +20,7 @@ SMODS.Joker {
   pos = { x = 24, y = 12 },
   atlas = 'jokers_atlas',
   cost = 6,
-  unlocked = true,
+  unlocked = false,
   discovered = false,
   blueprint_compat = true,
   eternal_compat = false,
@@ -44,6 +44,17 @@ SMODS.Joker {
         denominator
       }
     }
+  end,
+
+  check_for_unlock = function(self, args)
+    if G.GAME.round >= 1 then
+      for _, v in ipairs(G.playing_cards or {}) do
+        if PB_UTIL.is_rank(v, 8) then 
+          return false
+        end
+      end
+      return true
+    end
   end,
 
   calculate = function(self, card, context)

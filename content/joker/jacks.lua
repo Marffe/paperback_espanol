@@ -25,6 +25,15 @@ SMODS.Joker {
   paperback_credit = {
     coder = { 'thermo' }
   },
+  unlocked = false,
+
+  check_for_unlock = function(self, args)
+    if args.type == 'win_no_hand' then
+      if not G.GAME.paperback.ranks_scored_this_run[11] then
+        return true
+      end
+    end
+  end,
 
   loc_vars = function(self, info_queue, card)
     return {
@@ -42,7 +51,7 @@ SMODS.Joker {
         mult = card.ability.extra.mult
       }
     end
-    if not context.blueprint and context.discard and PB_UTIL.is_rank(context.other_card, card.ability.extra.rank) then
+    if not context.blueprint and context.discard and PB_UTIL.is_rank(context.other_card, card.ability.extra.rank) and not context.other_card.debuff then
       SMODS.scale_card(card, {
         ref_table = card.ability.extra,
         ref_value = 'mult',

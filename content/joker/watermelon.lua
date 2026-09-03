@@ -15,7 +15,7 @@ SMODS.Joker {
   pos = { x = 12, y = 10 },
   atlas = "jokers_atlas",
   cost = 6,
-  unlocked = true,
+  unlocked = false,
   discovered = false,
   blueprint_compat = true,
   eternal_compat = false,
@@ -36,6 +36,15 @@ SMODS.Joker {
         card.ability.extra.x_mult,
       }
     }
+  end,
+
+  
+  check_for_unlock = function(self, args)
+    if args.type == 'win_no_hand' then
+      if not (G.GAME.paperback.destroyed_cards["cards"] >= 1) then
+        return true
+      end
+    end
   end,
 
   calculate = function(self, card, context)
@@ -61,9 +70,7 @@ SMODS.Joker {
           ref_table = card.ability.extra,
           ref_value = 'x_mult',
           scalar_value = 'a_xmult',
-          operation = function(ref_table, ref_value, initial, scaling)
-            ref_table[ref_value] = initial - scaling * #context.removed
-          end,
+          scalar_factor = #context.removed,
           scaling_message = {
             message = localize {
               type = 'variable',

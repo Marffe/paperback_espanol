@@ -15,7 +15,7 @@ SMODS.Joker {
   pos = { x = 3, y = 2 },
   atlas = "jokers_atlas",
   cost = 6,
-  unlocked = true,
+  unlocked = false,
   discovered = false,
   blueprint_compat = true,
   eternal_compat = true,
@@ -32,6 +32,15 @@ SMODS.Joker {
       end
     }
   },
+
+  check_for_unlock = function(self, args)
+    for _, hand in ipairs(PB_UTIL.base_poker_hands) do
+      if G.GAME.hands[hand].played < 1 then
+        return false
+      end
+    end
+    return true
+  end,
 
   paperback_credit = {
     coder = { 'oppositewolf' }
@@ -96,7 +105,7 @@ SMODS.Joker {
 
 -- Update global information for Reference Card.
 -- See solar_system.lua
-function PB_UTIL.calculate_highest_shared_played(card)
+function PB_UTIL.calculate_highest_shared_played()
   local old = G.GAME.paperback.reference_card_ct
   local hands = G.GAME.hands
 

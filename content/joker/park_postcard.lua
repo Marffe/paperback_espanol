@@ -21,6 +21,7 @@ SMODS.Joker {
   blueprint_compat = true,
   eternal_compat = true,
   perishable_compat = false,
+  unlocked = false,
 
   loc_vars = function(self, info_queue, card)
     return {
@@ -28,6 +29,12 @@ SMODS.Joker {
         card.ability.extra.change, card.ability.extra.xm
       }
     }
+  end,
+
+  check_for_unlock = function (self, args)
+    if args.type == 'win' then
+      return G.GAME.paperback.cards_added_to_deck == 0 and G.GAME.paperback.destroyed_cards["cards"] == 0
+    end
   end,
 
   calculate = function(self, card, context)
@@ -47,11 +54,12 @@ SMODS.Joker {
       return nil, true
     end
     if context.playing_card_added or context.remove_playing_cards and not context.blueprint then
-      card.ability.extra.xm = 1
-      return {
-        message = localize('k_reset'),
-        colour = G.C.ORANGE
-      }
+      SMODS.reset_card(card, {
+        ref_table = card.ability.extra,
+        ref_value = 'xm',
+        reset_value = 1
+      })
+      return nil, true
     end
   end
 }

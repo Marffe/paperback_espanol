@@ -13,30 +13,48 @@ SMODS.current_mod.calculate = function(self, context)
   -- Count the amount of removed playing cards
   if context.remove_playing_cards then
     for _, v in ipairs(context.removed or {}) do
-      G.GAME.paperback.destroyed_cards = G.GAME.paperback.destroyed_cards + 1
-      G.GAME.paperback.destroyed_cards_this_round = G.GAME.paperback.destroyed_cards_this_round + 1
+      local destroyed = G.GAME.paperback.destroyed_cards
 
-      -- Count the amount of destroyed dark suits
-      if PB_UTIL.is_suit(v, 'dark', false, true) then
-        G.GAME.paperback.destroyed_dark_suits = G.GAME.paperback.destroyed_dark_suits + 1
-      end
+			destroyed["cards"] = destroyed["cards"] + 1
+			G.GAME.paperback.round.destroyed_cards_this_round = G.GAME.paperback.round.destroyed_cards_this_round + 1
+
+			local rank_obj = not v or SMODS.has_no_rank(v) and nil or PB_UTIL.get_rank_from_id(v:get_id())
+			local rank = rank_obj and rank_obj.key or "rankless"
+			destroyed.ranks[rank] = (destroyed.ranks[rank] or 0) + 1
+			if v:is_face() then destroyed.ranks["face"] = (destroyed.ranks["face"] or 0) + 1 end
+
+
+			local enhancements = SMODS.get_enhancements(v) or {}
+			for k, _ in pairs(enhancements) do
+				destroyed.enhancements[k] = (destroyed.enhancements[k] or 0) + 1
+			end
+
+			if not SMODS.has_no_suit(v) then
+				for k, _ in pairs(SMODS.Suits or {}) do
+					if v.base.suit == k then
+						destroyed.suits[k] = (destroyed.suits[k] or 0) + 1
+						if PB_UTIL.is_suit(v, 'light') then
+							destroyed.suits["light"] = (destroyed.suits["light"] or 0) + 1
+						elseif PB_UTIL.is_suit(v, 'dark') then
+							destroyed.suits["dark"] = (destroyed.suits["dark"] or 0) + 1
+						end
+					end
+				end
+			else
+				destroyed.suits["suitless"] = (destroyed.suits["suitless"] or 0) + 1
+			end
     end
   end
 
-  -- Reset the amount of removed playing cards this round
-  if context.end_of_round then
-    G.GAME.paperback.destroyed_cards_this_round = 0
-  end
-
-  -- green clip: gain mult for every other played and scored clip
   if context.before then
+    -- green clip: gain mult for every other played and scored clip
     local clips_played = PB_UTIL.count_paperclips { area = context.scoring_hand }
     if clips_played > 0 then
       for _, v in ipairs(G.playing_cards) do
         local clip = PB_UTIL.has_paperclip(v)
         if clip == "paperback_green_clip" and not v.debuff then
           local clip_table = v.ability.paperback_green_clip
-          clips_played_plus_odd = clip_table.odd + clips_played
+          local clips_played_plus_odd = clip_table.odd + clips_played
           -- Every 2 clips go into mult,
           -- remaining odd clip goes to `odd`
           clip_table.mult = clip_table.mult + clip_table.mult_plus * math.floor(clips_played_plus_odd / 2)
@@ -44,10 +62,18 @@ SMODS.current_mod.calculate = function(self, context)
         end
       end
     end
+
+    -- Keep Reference Card global variable updated
+    PB_UTIL.calculate_highest_shared_played()
+
+    for _, v in ipairs(context.scoring_hand) do
+      -- handle permabonus odds
+      G.GAME.paperback.permabonus_odds = G.GAME.paperback.permabonus_odds + v.ability.perma_paperback_plus_odds
+    end
   end
 
-  -- green clip: lose mult for each discarded clip
   if context.discard then
+    -- green clip: lose mult for each discarded clip
     if PB_UTIL.has_paperclip(context.other_card) and not context.other_card.debuff then
       for _, v in ipairs(G.playing_cards) do
         local clip = PB_UTIL.has_paperclip(v)
@@ -59,11 +85,11 @@ SMODS.current_mod.calculate = function(self, context)
     end
   end
 
-  -- track Tarot + Minor Arcana usage for 8 of Pentacles
   if context.using_consumeable then
     local center = context.consumeable.config.center
     local add_new = true
     if center.set == "Tarot" or center.set == "paperback_minor_arcana" then
+      -- track Tarot + Minor Arcana usage for 8 of Pentacles
       for _, v in ipairs(G.GAME.paperback.arcana_used) do
         if center.key == v then
           add_new = false
@@ -78,19 +104,9 @@ SMODS.current_mod.calculate = function(self, context)
 
   -- Keep Solar System global variable updated
   if context.paperback and context.paperback.level_up then
-    PB_UTIL.update_solar_system(card)
-  end
-  -- Keep Reference Card global variable updated
-  if context.before then
-    PB_UTIL.calculate_highest_shared_played(card)
+    PB_UTIL.update_solar_system()
   end
 
-  -- handle permabonus odds
-  if context.before then
-    for i, v in ipairs(context.scoring_hand) do
-      G.GAME.paperback.permabonus_odds = G.GAME.paperback.permabonus_odds + v.ability.perma_paperback_plus_odds
-    end
-  end
   if context.mod_probability then
     local h_odds = 0
     for i, v in ipairs(G.hand.cards) do
@@ -142,6 +158,13 @@ end
 -- Update values that get reset at the start of each round
 SMODS.current_mod.reset_game_globals = function(run_start)
   G.GAME.paperback.round.scored_clips = 0
+  G.GAME.paperback.round.played_face_cards = 0
+  G.GAME.paperback.round.ranks_scored = {}
+  G.GAME.paperback.round.suits_scored = {}
+  G.GAME.paperback.round.destroyed_cards_this_round = 0
+  G.GAME.paperback.round.played_only_ace_or_king = true
+  G.GAME.paperback.round.played_only_straights = true
+  G.GAME.paperback.round.scored_face_cards = 0
   G.GAME.paperback.highest_rank_this_round = nil
   G.GAME.paperback.weather_radio_hand = PB_UTIL.get_random_visible_hand('weather_radio')
   G.GAME.paperback.joke_master_hand = PB_UTIL.get_random_visible_hand('joke_master')

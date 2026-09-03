@@ -98,10 +98,10 @@ PB_UTIL.ENABLED_JOKERS = {
   "black_forest_cake",
   "ice_cube",
   "cream_liqueur",
+  "champagne",
+  "golden_apple",
   "deviled_egg",
   "chocolate_coins",
-  "golden_apple",
-  "champagne",
   "coffee",
   "matcha",
   "takoyaki",
@@ -150,7 +150,9 @@ PB_UTIL.ENABLED_JOKERS = {
   "cast_iron",
   "torii",
   "shugi_bukuro",
+  "hotel_guest",
   "freight",
+  "one_with_nothing",
   "high_speed_rail",
   "small_scale_onshore_wind",
   "doppler_radar",
@@ -197,9 +199,12 @@ PB_UTIL.ENABLED_JOKERS = {
   "oujia_board",
   "planchette",
   "prescript",
+  "frutiger_aero",
+  "pink_joker",
   "trans_flag",
   "pride_flag",
   "bismuth",
+  "scorecard",
   "cherry_blossoms",
   "hole_in_one",
   "blue_bonnets",
@@ -264,6 +269,7 @@ PB_UTIL.ENABLED_JOKERS = {
   "time_regression_mix",
   "find_jimbo",
   "joker_crossing",
+  "i_wish_that_i_could_fall",
   "jester",
   -- "tower_of_balatro",
   "jimbos_inferno",
@@ -271,8 +277,8 @@ PB_UTIL.ENABLED_JOKERS = {
   "tome",
   "journal",
   "park_postcard",
-  "keycard",
   "greeting_card",
+  "keycard",
   -- "an_invitation",
   "jimbocards",
   "forlorn",
@@ -509,7 +515,6 @@ PB_UTIL.ENABLED_ATTRIBUTES = {
   'minor_arcana', -- related to minor arcana
   'ego_gift',     -- related to ego gifts
   'negative',     -- related to the negative edition
-  'ante',         -- changes ante
   'music',        -- based on a song/album
   'secret',       -- has a secret trigger
   'red',          -- it's red

@@ -10,13 +10,14 @@ SMODS.Joker {
     'mult',
     'scaling',
     'planet',
+    'consumable',
     'space'
   },
   rarity = 1,
   pos = { x = 11, y = 1 },
   atlas = "jokers_atlas",
   cost = 3,
-  unlocked = true,
+  unlocked = false,
   discovered = false,
   blueprint_compat = true,
   eternal_compat = true,
@@ -32,6 +33,18 @@ SMODS.Joker {
         card.ability.extra.mult
       }
     }
+  end,
+
+  locked_loc_vars = function (self, info_queue, card)
+    return {vars = {3, localize("Clubs", 'suits_singular')}}
+  end,
+
+  check_for_unlock = function (self, args)
+    if args.type == 'paperback_suit_flushes' then
+      if G.GAME.paperback.played_flushes['Clubs'] and G.GAME.paperback.played_flushes['Clubs'] >= 3 then
+        return true
+      end
+    end
   end,
 
   calculate = function(self, card, context)

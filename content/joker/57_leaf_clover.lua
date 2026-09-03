@@ -15,7 +15,7 @@ SMODS.Joker {
   pos = { x = 24, y = 4 },
   atlas = "jokers_atlas",
   cost = 7,
-  unlocked = true,
+  unlocked = false,
   discovered = false,
   blueprint_compat = false,
   eternal_compat = true,
@@ -24,6 +24,14 @@ SMODS.Joker {
   paperback_credit = {
     coder = { 'vitellary' }
   },
+
+  check_for_unlock = function (self, args)
+    return G.GAME.paperback.suits_scored_this_run['Clubs'] and G.GAME.paperback.suits_scored_this_run['Clubs'] >= 57
+  end,
+
+  locked_loc_vars = function (self, info_queue, card)
+    return {vars = {57, localize('Clubs', 'suits_plural'),}}
+  end,
 
   loc_vars = function(self, info_queue, card)
     return { vars = { card.ability.extra.current, card.ability.extra.gain } }
@@ -36,8 +44,12 @@ SMODS.Joker {
     end
     if context.end_of_round and context.main_eval then
       if G.GAME.blind.boss then
-        card.ability.extra.current = 1
-        return { message = localize('k_reset') }
+        SMODS.reset_card(card, {
+          ref_table = card.ability.extra,
+          ref_value = 'current',
+          reset_value = 1
+        })
+        return nil, true
       else
         SMODS.scale_card(card, {
           ref_table = card.ability.extra,

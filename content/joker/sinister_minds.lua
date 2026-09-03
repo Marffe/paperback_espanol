@@ -5,6 +5,7 @@ SMODS.Joker {
       retriggers = 1,
       a_retriggers = 1,
       required_spectrals = 1,
+      required_spectrals_inc = 1,
       hand = 'Pair',
       spectrals_left = 1
     }
@@ -28,6 +29,16 @@ SMODS.Joker {
   paperback_credit = {
     coder = { 'thermo' }
   },
+  unlocked = false,
+
+  locked_loc_vars = function(self, info_queue, card)
+    return { vars = { localize('Pair', 'poker_hands') } }
+  end,
+  check_for_unlock = function(self, args)
+    if args.type == 'win' then
+      return PB_UTIL.get_most_played_hands()[1].key == 'Pair'
+    end
+  end,
 
   loc_vars = function(self, info_queue, card)
     return {
@@ -39,7 +50,8 @@ SMODS.Joker {
         localize('k_spectral'),
         card.ability.extra.required_spectrals == 1 and "" or "s",
         localize(card.ability.extra.hand, 'poker_hands'),
-        card.ability.extra.spectrals_left
+        card.ability.extra.spectrals_left,
+        card.ability.extra.required_spectrals_inc,
       }
     }
   end,
@@ -69,7 +81,7 @@ SMODS.Joker {
         SMODS.scale_card(card, {
           ref_table = card.ability.extra,
           ref_value = 'required_spectrals',
-          scalar_value = 'a_retriggers',
+          scalar_value = 'required_spectrals_inc',
           no_message = true
         })
         card.ability.extra.spectrals_left = card.ability.extra.required_spectrals

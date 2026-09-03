@@ -10,7 +10,8 @@ if PB_UTIL.should_load_spectrum_items() then
       'hand_type',
       'destroy_card',
       'generation',
-      'spectral'
+      'spectral',
+      'consumable'
     },
     rarity = 3,
     pos = { x = 25, y = 3 },
@@ -19,6 +20,7 @@ if PB_UTIL.should_load_spectrum_items() then
     blueprint_compat = false,
     eternal_compat = true,
     perishable_compat = true,
+    unlocked = false,
     paperback_credit = {
       coder = { 'thermo' }
     },
@@ -26,6 +28,20 @@ if PB_UTIL.should_load_spectrum_items() then
       requires_custom_suits = true,
       requires_spectrum_or_suit = true
     },
+
+    check_for_unlock = function(self, args)
+    if args.type == 'win' then
+      return string.find(PB_UTIL.get_most_played_hands()[1].key, "Spectrum", 1, true) ~= nil
+    end
+  end,
+
+    locked_loc_vars = function (self, info_queue, card)
+      return {
+        vars = {
+          localize(card.ability.extra.type, 'poker_hands'),
+        }
+      }
+    end,
 
     loc_vars = function(self, info_queue, card)
       return {

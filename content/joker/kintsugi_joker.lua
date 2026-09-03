@@ -4,7 +4,8 @@ SMODS.Joker {
     extra = {
       increase = 2,
       total = 0,
-      enhancement = 'm_paperback_ceramic'
+      enhancement = 'm_paperback_ceramic',
+      max = 10
     }
   },
   attributes = {
@@ -15,7 +16,7 @@ SMODS.Joker {
   pos = { x = 8, y = 9 },
   atlas = "jokers_atlas",
   cost = 7,
-  unlocked = true,
+  unlocked = false,
   discovered = false,
   blueprint_compat = false,
   eternal_compat = true,
@@ -29,6 +30,14 @@ SMODS.Joker {
     coder = { 'srockw' },
   },
 
+  check_for_unlock = function(self, args)
+    return (G.GAME.paperback.destroyed_cards.enhancements["m_paperback_ceramic"] or 0) >= 5
+  end,
+
+  locked_loc_vars = function(self, info_queue, card)
+    return { vars = { 5 } }
+  end,
+
   loc_vars = function(self, info_queue, card)
     return {
       vars = {
@@ -38,7 +47,8 @@ SMODS.Joker {
           set = 'Enhanced',
           key = card.ability.extra.enhancement
         },
-        card.ability.extra.total
+        card.ability.extra.total,
+        card.ability.extra.max
       }
     }
   end,
@@ -61,14 +71,15 @@ SMODS.Joker {
         end
       end
 
-      if inc > 0 then
+      if (inc > 0) and (card.ability.extra.total < card.ability.extra.max) then
         SMODS.scale_card(card, {
           ref_table = card.ability.extra,
           ref_value = 'total',
           scalar_value = 'increase',
+          scalar_factor = inc,
           operation = function(ref_table, ref_value, initial, scaling)
-            ref_table[ref_value] = initial + scaling * inc
-            G.GAME.paperback.ceramic_inc = G.GAME.paperback.ceramic_inc + scaling * inc
+            ref_table[ref_value] = math.min(initial + scaling, card.ability.extra.max)
+            G.GAME.paperback.ceramic_inc = G.GAME.paperback.ceramic_inc + (ref_table[ref_value] - initial) -- only increase by how much it changed
           end
         })
         return nil, true

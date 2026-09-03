@@ -15,7 +15,7 @@ SMODS.Joker {
   pos = { x = 17, y = 9 },
   atlas = "jokers_atlas",
   cost = 3,
-  unlocked = true,
+  unlocked = false,
   discovered = false,
   blueprint_compat = true,
   eternal_compat = true,
@@ -28,6 +28,14 @@ SMODS.Joker {
   paperback_credit = {
     coder = { 'dowfrin' }
   },
+
+  check_for_unlock = function(self, args)
+    return args.type == 'round_win' and G.GAME.paperback.round.played_only_straights and G.GAME.blind.boss
+  end,
+
+  locked_loc_vars = function (self, info_queue, card)
+    return { vars = { localize('Straight', 'poker_hands') }}
+  end,
 
   loc_vars = function(self, info_queue, card)
     info_queue[#info_queue + 1] = G.P_CENTERS.m_paperback_domino
@@ -58,9 +66,7 @@ SMODS.Joker {
           ref_table = card.ability.extra,
           ref_value = 'xmult',
           scalar_value = 'xmult_mod',
-          operation = function(ref_table, ref_value, initial, scaling)
-            ref_table[ref_value] = initial + scaling * upgrade
-          end
+          scalar_factor = upgrade
         })
         return nil, true
       end

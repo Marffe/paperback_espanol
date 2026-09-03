@@ -5,6 +5,12 @@ PB_UTIL.MinorArcana {
       max_jokers = 1
     }
   },
+  attributes = {
+    'destroy_card',
+    'generation',
+    'joker',
+    'rarity'
+  },
   atlas = 'minor_arcana_atlas',
   pos = { x = 1, y = 1 },
   paperback_credit = {
@@ -29,6 +35,10 @@ PB_UTIL.MinorArcana {
   use = function(self, card, area)
     local joker = G.jokers.highlighted[1]
     local rarity = joker.config.center.rarity
+
+    if rarity == 3 then
+      check_for_unlock({ type = 'paperback_rare_nine_of_cups' })
+    end
 
     if joker.config.center.paperback_nine_of_cups_rarity_override then
       rarity = joker.config.center.paperback_nine_of_cups_rarity_override

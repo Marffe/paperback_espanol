@@ -9,13 +9,14 @@ SMODS.Joker {
   attributes = {
     'generation',
     'minor_arcana',
+    'consumable',
     'hand_type'
   },
   rarity = 2,
   pos = { x = 18, y = 10 },
   atlas = 'jokers_atlas',
   cost = 6,
-  unlocked = true,
+  unlocked = false,
   discovered = false,
   blueprint_compat = true,
   eternal_compat = true,
@@ -27,6 +28,26 @@ SMODS.Joker {
   paperback_credit = {
     coder = { 'dowfrin' }
   },
+
+  check_for_unlock = function(self, args)
+    local count = 0
+
+    for k, v in pairs(G.GAME.consumeable_usage) do
+      if v.set == "paperback_minor_arcana" and string.find(k, "swords", 1, true) then
+        count = count + (v.count or 0)
+      end
+    end
+
+    return count >= 3
+  end,
+
+  locked_loc_vars = function (self, info_queue, card)
+    return {
+      vars = {
+        3
+      }
+    }
+  end,
 
   loc_vars = function(self, info_queue, card)
     return {
