@@ -3,7 +3,7 @@ local paperback_calculate_ref = SMODS.current_mod.calculate
 SMODS.current_mod.calculate = function(self, context)
 	paperback_calculate_ref(self, context)
 
-	if context.remove_playing_cards then
+	if context.remove_playing_cards and not next(SMODS.find_card('j_paperback_cross')) then
 		for _, v in ipairs(context.removed or {}) do
 			-- Power Surge unlock
 			if PB_UTIL.is_rank(v, 7) and SMODS.has_enhancement(v, 'm_steel') then
@@ -89,17 +89,21 @@ SMODS.current_mod.calculate = function(self, context)
       if v:is_face() then
         G.GAME.paperback.round.scored_face_cards = G.GAME.paperback.round.scored_face_cards + 1
       end
-      if not PB_UTIL.is_suit(v, 'dark', false, true) then
-        G.GAME.paperback.hand_only_scored_dark = false
-      end
-      if not PB_UTIL.is_suit(v, 'light', false, true) then
+      if PB_UTIL.is_non_suit(v, 'light', true, true, true) then
         G.GAME.paperback.hand_only_scored_light = false
       end
-      if PB_UTIL.is_suit(v, 'dark', false, true) then
+      if PB_UTIL.is_non_suit(v, 'dark', true, true, true) then
+        G.GAME.paperback.hand_only_scored_dark = false
+      end
+      if v:is_suit_shade('dark') then
         dark_count = dark_count + 1
       end
-      if PB_UTIL.is_suit(v, 'light', false, true) then
+      if v:is_suit_shade('light') then
         light_count = light_count + 1
+      end
+      -- Black Knife unlock
+      if v:is_suit('paperback_Stars') then
+        PB_UTIL.increment_career_stat("played_stars")
       end
       -- Rosary Beads, Technology unlock
       if not (v:is_suit('Hearts') or SMODS.has_any_suit(v)) then
@@ -181,6 +185,10 @@ SMODS.current_mod.calculate = function(self, context)
     if not next(context.poker_hands['Straight']) then
       G.GAME.paperback.round.played_only_straights = false
     end
+    -- Nazca Lines unlock
+    if (PB_UTIL.get_unique_suits(context.scoring_hand) == 1) and context.scoring_name == 'Four of a Kind' then
+      check_for_unlock({ type = 'paperback_4oak_1_suit' })
+    end
 
     -- checks if played hand contains a flush for the suit drink's unlock
     if next(context.poker_hands['Flush']) then
@@ -249,14 +257,12 @@ SMODS.current_mod.calculate = function(self, context)
 	if context.using_consumeable then
 		-- track minor arcana usage across runs
     if context.consumeable.config.center.set == "paperback_minor_arcana" then
-      G.PROFILES[G.SETTINGS.profile].career_stats.paperback_minor_arcana_used = (G.PROFILES[G.SETTINGS.profile].career_stats.paperback_minor_arcana_used or 0) + 1
-			check_for_unlock({type = 'paperback_use_minor_arcana', minor_arcana_total = G.PROFILES[G.SETTINGS.profile].career_stats.paperback_minor_arcana_used})
+      PB_UTIL.increment_career_stat("minor_arcana_used")
     end
 	end
 
 	if context.skip_blind then
-		G.PROFILES[G.SETTINGS.profile].career_stats.paperback_blind_skips = (G.PROFILES[G.SETTINGS.profile].career_stats.paperback_blind_skips or 0) + 1
-		check_for_unlock({type = 'paperback_skip_blind', blind_skips_total = G.PROFILES[G.SETTINGS.profile].career_stats.paperback_blind_skips})
+		PB_UTIL.increment_career_stat("skip_blind")
 	end
 
 	if context.after then

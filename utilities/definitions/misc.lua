@@ -81,6 +81,7 @@ PB_UTIL.ENABLED_JOKERS = {
   "skydiver",
   "surfer",
   "apple",
+  "toppins",
   "freezer",
   "joker_cookie",
   "double_dutchman",
@@ -132,6 +133,7 @@ PB_UTIL.ENABLED_JOKERS = {
   "blue_marble",
   "triple_moon_goddess",
   "sacred_heart",
+  "cross",
   "as_above_so_below",
   "one_sin_and_hundreds_of_good_deeds",
   "plague_doctor",
@@ -158,6 +160,7 @@ PB_UTIL.ENABLED_JOKERS = {
   "doppler_radar",
   "satellite_array",
   "first_contact",
+  "black_knife",
   "aurora_borealis",
   "grand_strategy",
   "moving_out",
@@ -180,6 +183,7 @@ PB_UTIL.ENABLED_JOKERS = {
   "jester_of_nihil",
   "shopkeep",
   "membership_card",
+  "moneyback",
   "wild_prize",
   "deadringer",
   "penumbra_phantasm",
@@ -188,6 +192,7 @@ PB_UTIL.ENABLED_JOKERS = {
   "ncj",
   "whitebeard",
   "bicycle",
+  "degenerate_joker",
   "mezzetino",
   "gauze",
   "joke_master",
@@ -213,6 +218,7 @@ PB_UTIL.ENABLED_JOKERS = {
   "river",
   "evergreens",
   "56_leaf_clover",
+  "nazca_lines",
   "master_plan",
   "the_wonder_of_you",
   "tian_tian",
@@ -274,6 +280,7 @@ PB_UTIL.ENABLED_JOKERS = {
   -- "tower_of_balatro",
   "jimbos_inferno",
   "malibu",
+  "grimoire",
   "tome",
   "journal",
   "park_postcard",
@@ -326,6 +333,7 @@ PB_UTIL.ENABLED_JOKERS = {
   "black_star",
   "shooting_star",
   "stella_octangula",
+  "stardrop",
   "blue_star",
   "shadowmantle",
   "zealous_joker",
@@ -365,7 +373,7 @@ PB_UTIL.ENABLED_JOKERS = {
   "pedrillo",
   "nichola",
   "chaplin",
-  -- "shinzaemon",
+  "shinzaemon",
 }
 
 PB_UTIL.ENABLED_SPECTRALS = {
@@ -519,4 +527,14 @@ PB_UTIL.ENABLED_ATTRIBUTES = {
   'secret',       -- has a secret trigger
   'red',          -- it's red
   'stick'         -- it's stick
+}
+
+PB_UTIL.ENABLED_SLEEVES = {
+  'paper',
+  'proud',
+  'silver',
+  'dreamer',
+  'antique',
+  'passionate',
+  -- 'shimmering',
 }

@@ -701,6 +701,32 @@ return { -- Español
           "{C:inactive}(Actualmente {C:mult}+#3#{C:inactive} Multi)"
         }
       },
+      j_paperback_frutiger_aero = {
+        name = "Frutiger Aero",
+        text = {
+          "{C:chips}#1#{} Fichas,",
+          "pierde {C:chips}#2#{} Fichas",
+          "por cada {C:money}$1{} gastado",
+        },
+        unlock = {
+          "Gana una partida sin",
+          "ningún Comodín {C:red}Raro{}",
+        },
+      },
+      j_paperback_pink_joker = {
+        name = "Comodín Rosa",
+        text = {
+          "Mientras tengas una {C:attention}carta Manchada{} en mano,",
+          "las cartas anotadas tienen prob. de {C:green}#1# en #2#{}",
+          "de ganar {C:money}+$#3#{} permanente al anotar",
+          "si aún no lo tienen",
+        },
+        unlock = {
+          "Ten al menos",
+          "{C:attention}#1# cartas Manchadas{}",
+          "en tu baraja",
+        },
+      },
       j_paperback_ultra_rare = {
         name = "Ultra Raro",
         text = {
@@ -1054,9 +1080,9 @@ return { -- Español
       j_paperback_scorecard = {
         name = "Tabla de Puntuación",
         text = {
-          "Cada {C:attention}#1# {C:inactive}[#2#]{} {V:1}#3#{} descartada,",
+          "Cada {C:attention}#1# {C:inactive}[#2#]{} {V:1}#3#{} descartados,",
           "obtiene el valor de venta de otro",
-          "como {C:mult}+Multi{}",
+          "Comodín como {C:mult}+Multi{}",
           "{C:inactive}(Actualmente {C:mult}+#4#{C:inactive} Multi)",
         },
         unlock = {
@@ -1805,6 +1831,13 @@ return { -- Español
           "{C:attention}Reina Versátil{}",
         },
       },
+      j_paperback_degenerate_joker = {
+        name = "Comodín Degenerado",
+        text = {
+          "Las {C:attention}#1#s{} jugadas se convierten",
+          "en la carta de la derecha"
+        }
+      },
       j_paperback_stamp = {
         name = "Estampilla",
         text = {
@@ -1923,8 +1956,7 @@ return { -- Español
       j_paperback_wild_plus_four = {
         name = "+4 Salvaje",
         text = {
-          "{C:attention}+#1#{} al tamaño",
-          "de la mano",
+          "{C:attention}+#1#{} al tamaño de mano",
           "{C:blue}#2#{} mano"
         },
         unlock = {
@@ -2423,6 +2455,31 @@ return { -- Español
         unlock = {
           "Come {C:attention}#1#{}",
         },
+      },
+      j_paperback_toppins = {
+        name = "Toppins",
+        text = {
+          "Las cartas otorgan {C:mult}+#1#{} Multi al anotar.",
+          "Aumenta en {C:mult}+#2#{} Multi por cada",
+          "carta anotada anteriormente",
+          "{C:inactive}(Se reinicia tras cada mano jugada)",
+        },
+        unlock = {
+          "Juega una mano",
+          "anotando {C:attention,E:1}#1#{} palos"
+        }
+      },
+      j_paperback_cross = {
+        name = "Cruz",
+        text = {
+          "Las cartas de juego, los {C:attention}Comodines{} y",
+          "los {C:attention}Consumibles{} {C:attention}no{} pueden {C:red}destruirse{}",
+          "{C:inactive}(No evita la {C:money}venta{} ni la",
+          "{C:inactive}{S:1.1,C:red,E:2}autodestrucción{C:inactive})"
+        },
+        unlock = {
+          "Consigue un {C:attention}Apóstol{}"
+        }
       },
       j_paperback_prince_of_darkness = {
         name = "Príncipe de la Oscuridad",
@@ -3012,6 +3069,18 @@ return { -- Español
           "en una partida",
         },
       },
+      j_paperback_hotel_guest = {
+        name = "Huésped del Hotel",
+        text = {
+          "Otorga {X:mult,C:white}X#1#{} Multi por cada",
+          "{C:attention}Reina{} en mano",
+          "{C:inactive}(Actualmente {X:mult,C:white}X#2#{C:inactive} Multi){}",
+        },
+        unlock = {
+          "Ten una",
+          "{C:attention}Reina de Acero{}",
+        },
+      },
       j_paperback_freight = {
         name = "Carga",
         text = {
@@ -3073,7 +3142,8 @@ return { -- Español
         name = "Aquel sin nada",
         text = {
           "Tras jugar una mano,",
-          "{C:attention}descarta{} todas las cartas en mano",
+          "{C:red}descarta{} todas las cartas",
+          "en mano",
         },
         unlock = {
           "Quédate sin cartas",
@@ -3473,6 +3543,70 @@ return { -- Español
           "{C:attention}Rey{} de {C:paperback_crowns}Coronas{}",
         },
       },
+      j_paperback_i_wish_that_i_could_fall = {
+        name = "I Wish That I Could Fall",
+        text = {
+          "Cuando se anota una carta,",
+          "disminuye su {C:attention}categoría{} y obtiene",
+          "{C:chips}+#1#{} Fichas",
+          "{C:inactive}(2 -> As -> Rey){}",
+          "{C:inactive}(Actualmente {C:chips}+#2#{C:inactive} Fichas){}",
+        },
+      },
+      j_paperback_shinzaemon = {
+        name = "Shinzaemon",
+        text = {
+          "Si la mano anotada contiene",
+          "{C:attention}#1#{} cartas, la {C:attention}#1#ª{} carta",
+          "gana permanentemente {X:mult,C:white}X#2#{} Multi"
+        },
+        unlock = {
+          "{E:1,s:1.3}?????",
+        }
+      },
+      j_paperback_stardrop = {
+        name = "Fruta Estrella",
+        text = {
+          "Al anotar {V:1}#2#{},",
+          "{C:purple}Balancea{} el {C:attention}#1#%{} de",
+          "las {C:chips}Fichas{} y el {C:mult}Multi"
+        },
+        unlock = {
+          "Ten una baraja compuesta",
+          "solo por {C:paperback_stars,E:1}Estrellas{}"
+        }
+      },
+      j_paperback_moneyback = {
+        name = "Reembolso",
+        text = {
+          "Cada {C:money}$#1#{C:inactive} [#2#]{} gastado",
+          "otorga {C:money}$#3#{}"
+        },
+        unlock = {
+          "Gasta {C:money}$100",
+          "en una Tienda"
+        }
+      },
+      j_paperback_nazca_lines = {
+        name = "Líneas de Nazca",
+        text = {
+          "Las cartas anotadas otorgan {C:money}$#1#",
+          "por {C:attention}cada{} carta adyacente",
+          "{C:attention}debilitada{} o {C:attention}sin anotar{}"
+        },
+        unlock = {
+          "Juega un {C:attention}Póker{}",
+          "con todas las cartas del mismo palo"
+        }
+      },
+      j_paperback_grimoire = {
+        name = "Grimorio",
+        text = {
+          "Las {C:money}Tiendas{} después de la {C:attention}Ciega Grande{}",
+          "comienzan con un {C:paperback_ego_gift}Paquete de",
+          "{C:paperback_ego_gift}Extracción E.G.O.{} adicional"
+        }
+      },
       -- Cross-Mod jokers start here
       j_paperback_moon_waltz = {
         name = "Moon Waltz",
@@ -3772,6 +3906,23 @@ return { -- Español
           "sin jugar",
           "ninguna {C:attention}Jota{}",
         },
+      },
+      j_paperback_black_knife = {
+        name = "Cuchillo Negro",
+        text = {
+          {
+          "Crea un {C:attention}Comodín{} {C:dark_edition}Negativo{} al azar",
+          "por cada {C:attention}#1#{C:inactive} [#2#]{} {C:paperback_light_suit}palos claros{} destruidos" },
+          {
+            "Los {C:paperback_light_suit}palos claros{} anotados",
+            "tienen una prob. de {C:green}#3#{} en {C:green}#4#{} de",
+            "{C:attention}destruir{} un {C:attention}Comodín{} al azar"
+          },
+        },
+        unlock = {
+          "Anota {C:attention,E:1}#1# {C:paperback_stars}Estrellas",
+          "{C:inactive}(#2#)",
+        }
       },
       j_paperback_red_sun_in_the_sky = {
         name = "Amanecer Rojo",

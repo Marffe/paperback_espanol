@@ -11,11 +11,6 @@ function Game.init_game_object(self)
     if (type(v.visible) == 'function' and not v:visible()) or v.visible == false then table.insert(secrets, k) end
   end
 
-  -- Temporary solution to track paperclip discovery for Clippy
-  -- until paperclips are converted to smods generic card modifier
-  G.PROFILES[G.SETTINGS.profile].career_stats.paperback_temp_paperclip_discovery = 
-  G.PROFILES[G.SETTINGS.profile].career_stats.paperback_temp_paperclip_discovery or {}
-
   ret.paperback = {
     solar_system_ct = 1,
     reference_card_ct = 0,
@@ -35,7 +30,7 @@ function Game.init_game_object(self)
     destroyed_cards = {
       ["cards"] = 0,
       suits = {
-        -- stores ['dark'], ['light'], ['suitless'], and suit keys (ex: ['Hearts'], ['Spades'], ['paperback_Crowns'])
+        -- stores ['suitless'], suit shades (ex: ['light'], ['dark']), and suit keys (ex: ['Hearts'], ['Spades'], ['paperback_Crowns'])
       },
       ranks = {
         -- stores ['face'], ['rankless'], and rank keys (ex: ['King'], ['10'], ['paperback_Apostle'])
@@ -91,6 +86,7 @@ function Game.init_game_object(self)
     money_gained_this_ante = 0,
     unique_clips_this_run = {},
     num_bandages_broken_last_hand = 0,
+    num_food_jokers_obtained = 0,
 
     permabonus_odds = 0,
 
@@ -409,17 +405,10 @@ G.FUNCS.toggle_shop = function(e)
   end
 end
 
--- if a special clip is copied, replace it with a random non-special clip
--- also stop HATRED's marked cards from copying the mark
+-- stop HATRED's marked cards from copying the mark
 local copy_card_ref = copy_card
 copy_card = function(other, new_card, card_scale, playing_card, strip_edition)
   local card = copy_card_ref(other, new_card, card_scale, playing_card, strip_edition)
-  local clip = PB_UTIL.has_paperclip(card)
-
-  if clip and not G.SETTINGS.paused and PB_UTIL.is_special_clip(clip) then
-    PB_UTIL.set_paperclip(card, PB_UTIL.poll_paperclip('plat_copy', false))
-  end
-
   if card.ability.paperback_hatred_mark then
     card.ability.paperback_hatred_mark = nil
   end

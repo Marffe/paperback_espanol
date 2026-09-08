@@ -11,8 +11,13 @@ end
 if next(SMODS.find_mod('Bunco')) then
   local prefix = SMODS.find_mod('Bunco')[1].prefix or "bunc"
 
-  table.insert(PB_UTIL.light_suits, prefix .. '_Fleurons')
-  table.insert(PB_UTIL.dark_suits, prefix .. '_Halberds')
+  --Adding shades to the Bunco suits via take_ownership until they add their own shades
+  SMODS.Suit:take_ownership(prefix .. '_Fleurons', {
+    shade = 'light'
+  }, true)
+  SMODS.Suit:take_ownership(prefix .. '_Halberds', {
+    shade = 'dark'
+  }, true)
 end
 
 if next(SMODS.find_mod('partner')) then
@@ -41,16 +46,6 @@ if next(SMODS.find_mod('CardSleeves')) then
     py = 95
   }
 
-  local sleeves = {
-    'paper',
-    'proud',
-    'silver',
-    'dreamer',
-    'antique',
-    'passionate',
-    -- 'shimmering',
-  }
-
   PB_UTIL.Sleeve = CardSleeves.Sleeve:extend {
     is_buffed = function(self)
       return self.get_current_deck_key() == self.deck_buff
@@ -67,7 +62,7 @@ if next(SMODS.find_mod('CardSleeves')) then
     end
   }
 
-  PB_UTIL.register_items(sleeves, "content/cardsleeves")
+  PB_UTIL.register_items(PB_UTIL.ENABLED_SLEEVES, "content/cardsleeves")
 end
 
 -- JokerDisplay hook to calculate retriggers from Paperback features
