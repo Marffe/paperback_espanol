@@ -398,7 +398,7 @@ return {
         },
         unlock = {
           "Have a card with",
-          "{C:mult,E:1}+#1# {C:attention,E:1}Extra Mult"
+          "{C:mult,E:1}+#1# {C:attention,E:1}extra Mult"
         }
       },
       j_paperback_jestosterone = {
@@ -1058,7 +1058,7 @@ return {
           "{C:inactive}(Currently {C:money}$#3#{C:inactive})"
         },
         unlock = {
-          "Gain {C:money,E:1}$#1#{}",
+          "Earn {C:money,E:1}$#1#{}",
           "in one ante"
         }
       },
@@ -2048,7 +2048,10 @@ return {
         text = {
           "Played {C:attention}#1#s{} turn",
           "into the card to the {C:attention}right{}"
-        }
+        },
+        unlock = {
+          "Make a {C:attention,E:1}Wild Card{}",
+        },
       },
       j_paperback_stamp = {
         name = "Stamp",
@@ -3382,7 +3385,7 @@ return {
         },
         unlock = {
           "Win a run with one hand",
-          "played {C:attention,E:1}#1#{} or more times",
+          "played {C:attention,E:1}#1#+{} more times",
           "than the {C:attention,E:1}next{} lowest",
           "most played hand"
         }
@@ -3692,8 +3695,8 @@ return {
         name = "Black Knife",
         text = {
           {
-          "Create a random {C:dark_edition}Negative{C:attention} Joker{}",
-          "for every {C:attention}#1#{C:inactive} [#2#]{} destroyed {C:paperback_light_suit}light suits" },
+            "Create a random {C:dark_edition}Negative{C:attention} Joker{}",
+            "for every {C:attention}#1#{C:inactive} [#2#]{} destroyed {C:paperback_light_suit}light suits" },
           {
             "Scored {C:paperback_light_suit}light suits{} have a",
             "{C:green}#3#{} in {C:green}#4#{} chance to",
@@ -3763,6 +3766,16 @@ return {
           "Activate {E:1,C:attention}#1#{} tags",
           "in one run",
         }
+      },
+      j_paperback_nigiri = {
+        name = "Nigiri",
+        text = {
+          "This Joker gains {C:attention}1/#2#th{} of the",
+          "{C:rank}rank{} of discarded cards as {C:white,X:red}XMult{},",
+          "{C:red}self-destructs{} if a {C:}Face card{} scores,",
+          "resets when {C:attention}Boss Blind{} is defeated",
+          "{C:inactive}(Currently {C:white,X:red}X#1#{C:inactive} Mult){}",
+        },
       },
       j_paperback_freedom_of_choice = {
         name = "Freedom of Choice",
@@ -4082,7 +4095,7 @@ return {
         },
         unlock = {
           "Spend {C:money}$100",
-          "In a shop"
+          "in a shop"
         }
       },
       j_paperback_nazca_lines = {
@@ -4093,8 +4106,8 @@ return {
           "{C:attention}debuffed{} or {C:attention}unscored{} card"
         },
         unlock = {
-          "Play a Four of a Kind",
-          "All of the same suit"
+          "Play a {C:attention, E:1}Four of a Kind{}",
+          "all of the same suit"
         }
       },
       j_paperback_grimoire = {

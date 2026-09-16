@@ -3330,6 +3330,16 @@ return { -- Español
           "en una partida",
         },
       },
+      j_paperback_nigiri = {
+        name = "Nigiri",
+        text = {
+          "Aumenta su {C:white,X:red}XMulti{} en {C:attention}1/#2#{}",
+          "de la {C:rank}categoría{} de las cartas descartadas,",
+          "{C:red}se autodestruye{} si una {C:attention}carta de figura{}",
+          "anota y se reinicia al derrotar una {C:attention}Ciega Jefe{}",
+          "{C:inactive}(Actualmente {C:white,X:red}X#1#{C:inactive} Multi){}",
+        },
+      },
       j_paperback_doppler_radar = {
         name = "Radar Doppler",
         text = {
