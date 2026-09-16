@@ -37,15 +37,14 @@ return { -- Español
       b_paperback_dreamer = {
         name = "Baraja Soñadora",
         text = {
-          "Comienza con un",
-          "{C:paperback_minor_arcana,T:c_paperback_apostle_of_wands}#1#",
-          "{C:paperback_temporary}Temporal",
-          "{C:attention}#2#{} Ranura de comodín"
+          "Comienza la partida con un",
+          "{C:paperback_minor_arcana,T:c_paperback_apostle_of_wands}#1#{} {C:paperback_temporary}temporal",
+          "La partida comienza en la {C:attention}Ciega Grande{}"
         },
         unlock = {
-          "Win a run with any",
-          "deck on at least",
-          "{V:1}#1#{} difficulty",
+          "Ten al menos",
+          "{C:attention}#2#{} Comodines con",
+          "{V:1}#1#{} stickers",
         }
       },
       b_paperback_antique = {
@@ -461,13 +460,13 @@ return { -- Español
         name = "Dutchman Doble",
         text = {
           "Por las siguientes {C:attention}#3#{} {C:blue}manos{}:",
-          "Cada carta {C:attention}mano{} tiene una prob. de",
-          "{C:green}#1# en #2#{} de ganar una {C:attention}mejora{} al azar y una",
-          "prob. de {C:green}#1# en #2#{} de ganar un {C:attention}sello{} al azar"
+          "Cada carta en {C:attention}mano{} tiene una prob. de",
+          "{C:green}#1# en #2#{} de obtener una {C:attention}mejora{} y una",
+          "prob. de {C:green}#1# en #2#{} de obtener un {C:attention}sello{}"
         },
         unlock = {
           "Ten una carta de juego",
-          "con {C:attention}mejora{}, {C:attention}sello{},",
+          "con una {C:attention}mejora{}, {C:attention}sello{},",
           "{C:dark_edition}edición{} y {C:attention}clip{}",
         },
       },
@@ -1793,9 +1792,9 @@ return { -- Español
       j_paperback_joker_cookie = {
         name = "Comodín Galleta",
         text = {
-          "Gana {C:money}$#1#{} al final de la ronda el",
-          "pago aumenta en {C:money}$#2#{} al entrar",
-          "a la tienda, prob. de {C:green}#4# en #3#{}",
+          "Ganas {C:money}$#1#{} al final de la ronda,",
+          "aumenta en {C:money}$#2#{} al entrar a la",
+          "{C:attention}tienda{}, prob. de {C:green}#4# en #3#{}",
           "de ser comido al final de la ronda",
         },
       },
@@ -5239,9 +5238,9 @@ return { -- Español
       paperback_platinum_clip = {
         name = "Clip de Platino",
         text = {
-          "Al {C:attention}anotar{}, fuerza a los",
-          "{C:attention}Clips{} a activarse si están",
-          "{C:attention}en mano{}"
+          "Al {C:attention}anotar{}, fuerza la",
+          "activación de cada {C:attention}Clip{} único",
+          "no-{C:paperback_platinum}Platino{} jugado o {C:attention}en mano{}"
         }
       },
 
@@ -5434,17 +5433,16 @@ return { -- Español
       sleeve_paperback_dreamer = {
         name = "Funda Soñadora",
         text = {
-          "Comienza con un",
-          "{C:paperback_minor_arcana,T:c_paperback_apostle_of_wands}#1#",
-          "{C:paperback_temporary}Temporal",
-          "{C:attention}#2#{} Ranura de comodín"
+          "Comienza la partida con un",
+          "{C:paperback_minor_arcana,T:c_paperback_apostle_of_wands}#1#{} {C:paperback_temporary}temporal",
+          "La partida comienza en la {C:attention}Ciega Grande{}"
         }
       },
       sleeve_paperback_dreamer_buff = {
         name = "Funda Soñadora",
         text = {
-          "Tu Baraja contiene",
-          "{C:attention}Apostoles"
+          "Comienza con un {C:attention}#1#{}",
+          "de cada palo"
         }
       },
 
