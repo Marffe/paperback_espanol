@@ -89,6 +89,30 @@ return { -- Español
           "{C:paperback_ego_gift}E.G.O. Gifts{}"
         }
       },
+      b_paperback_commander = {
+        name = "Baraja Comandante",
+        text = {
+          "El {C:attention}Comodín{} del extremo izquierdo",
+          "se activa {C:attention}dos veces{} si es posible",
+          "Los {C:attention}Comodines{} no se pueden mover",
+          "mientras estés en una {C:attention}Ciega{}"
+        },
+        unlock = {
+          "Ten una baraja con al menos 100 cartas"
+        }
+      },
+      b_paperback_potters = {
+        name = "Baraja del Alfarero",
+        text = {
+          "Todas las cartas comienzan",
+          "como {C:attention}Cartas de cerámica{}",
+          "El {C:Money}dinero{} se fija en {C:red}0{}",
+          "al entrar a una {C:attention}Ciega{}"
+        },
+        unlock = {
+          "Destruye #1# {C:inactive}[#2#]{} cartas"
+        }
+      },
     },
     Blind = {
       bl_paperback_quarter = {
@@ -682,7 +706,7 @@ return { -- Español
         name = "Aurora Boreal",
         text = {
           "Gana {X:mult,C:white}X#1#{} Multi por cada",
-          "Comodín con {C:attention}Edción{} que poseas",
+          "Comodín con {C:attention}Edición{} que poseas",
           "{s:0.9,C:dark_edition}Negativos{s:0.9,C:inactive} excluidos{}",
           "{C:inactive}(Actualmente {X:mult,C:white}X#2#{C:inactive} Multi)"
         },
